@@ -17,6 +17,7 @@ sock.listen(1)
 COM_PORT = 'COM6'
 BAUD_RATES = '9600'
 ser = serial.Serial(COM_PORT, BAUD_RATES)
+now_id = 1000
 while True:
     try:
         connection, client_address = sock.accept()
@@ -28,7 +29,8 @@ while True:
             continue
         print(int(data), data)
         data = data.decode() 
-        id_ = str(random.randint(1000, 99999))
+        id_ = str(now_id)
+        now_id += 1
         s = hashlib.sha1()
         s.update('{id_}|{amount}|BambooFox'.format(id_=id_, amount=data).encode())
         hash_ = s.hexdigest()
