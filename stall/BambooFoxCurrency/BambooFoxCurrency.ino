@@ -23,10 +23,7 @@ void loop() {
 
   if(Serial.available()) {
     String line = Serial.readString();
-    char testqr[line.length()];
-    line.toCharArray(testqr, line.length());
-    uint8_t *testqrr = (unsigned char *)testqr;
-    //if(line.toInt()){
+    if(line.toInt()){
       printer.setSize('M');        // Set type size, accepts 'S', 'M', 'L'
       printer.justify('C');
       printer.println(F("BambooFox Currency"));
@@ -42,6 +39,6 @@ void loop() {
       delay(3000L);         // Sleep for 3 seconds
       printer.wake();       // MUST wake() before printing again, even if reset
       printer.setDefault(); // Restore printer to defaults
-    //}
+    }
   }
 }
