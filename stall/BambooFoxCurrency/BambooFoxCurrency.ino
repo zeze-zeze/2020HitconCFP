@@ -23,12 +23,16 @@ void loop() {
 
   if(Serial.available()) {
     String line = Serial.readString();
-    if(line.toInt()){
+    char testqr[line.length()];
+    line.toCharArray(testqr, line.length());
+    uint8_t *testqrr = (unsigned char *)testqr;
+    //if(line.toInt()){
       printer.setSize('M');        // Set type size, accepts 'S', 'M', 'L'
       printer.justify('C');
       printer.println(F("BambooFox Currency"));
       //printer.printBitmap(logo_width, logo_height, fox);
-      printer.printBitmap(foxqrcode_width, foxqrcode_height, foxqrcode);
+      //printer.printBitmap(foxqrcode_width, foxqrcode_height, foxqrcode);
+      printer.printBitmap(384, 384, testqrr);
       printer.print(F("$"));
       printer.println(line.toInt());
       printer.println(F(""));
@@ -38,6 +42,6 @@ void loop() {
       delay(3000L);         // Sleep for 3 seconds
       printer.wake();       // MUST wake() before printing again, even if reset
       printer.setDefault(); // Restore printer to defaults
-    }
+    //}
   }
 }

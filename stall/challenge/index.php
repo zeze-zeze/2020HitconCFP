@@ -12,6 +12,15 @@
 <body>
 <section id="parallax-0" class="hero is-fullheight">
     <div id="block">
+<?php
+    include_once 'secret.php';
+    $pass = false;
+    // bypass!
+    if(md5($_COOKIE['permission']) == "0e372212347327653797951228669490" && is_numeric($_POST['amount'])){
+        secret(trim(substr($_POST['amount'], 0, 10)));
+        $pass = true;
+    } 
+?>
         <form method="post">
             <b>Print </b>
             <input type="text" name="amount">
@@ -19,16 +28,16 @@
             <br>
             <input type="submit" value="Print">
         </form>
+        <?php 
+            if(isset($_POST['amount']) && !$pass){
+                echo '<script>alert("permission denied!");</script>';
+            }
+            else if($pass){
+                echo '<script>alert("success");</script>';
+            }
+        ?>
     </div>
 </section>
 </body>
 </html>
 <!-- Do you want to see the source code ~ /source.txt -->
-
-<?php
-    include_once 'secret.php';
-    // bypass!
-    if(md5($_COOKIE['permission']) == "0e372212347327653797951228669490" && is_numeric($_POST['amount'])){
-        secret(trim(substr($_POST['amount'], 0, 10)));
-    } 
-?>

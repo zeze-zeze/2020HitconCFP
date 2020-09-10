@@ -6,7 +6,7 @@ COM_PORT = 'COM6'
 BAUD_RATES = '115200'
 ser = serial.Serial(COM_PORT, BAUD_RATES)
 
-IP = '0.0.0.0'
+IP = '127.0.0.1'
 PORT = 20080
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server_address = (IP, PORT)
@@ -23,7 +23,12 @@ while True:
             else:
                 continue
             print(int(data), data)
-            ser.write(data)
+
+            with open('logo_384.bmp', 'rb') as image:
+                f = image.read()
+                test = bytearray(f)
+            #test = ''.join([chr(int(i, 16)) for i in b.split(b'{')[1].split(b'}')[0].replace(b'\n', b'').replace(b'\r', b'').replace(b' ', b'').split(b',')]).encode()
+            ser.write(test)
     except KeyboardInterrupt:
         print('bye')
         break
