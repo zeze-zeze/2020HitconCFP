@@ -46,7 +46,8 @@ while True:
         if not sended[-1]:
             sended.pop()
         sended = bytes([int(s[2:], 16) for s in sended])
-        sended = b'%s%s%s' % (b'STARTSTART', sended, b'ENDEND')
+        sended = b'%s%s%s%s%s' % (b'STARTSTART', sended, b'ENDEND')
+        #sended = b'%s%s%s%s%s' % (b'STARTSTART', sended, b'ENDEND', data.encode(), b'MONEY')
         
         #if ser.in_waiting == 0:
         #    for i in range(0, len(sended), 32):

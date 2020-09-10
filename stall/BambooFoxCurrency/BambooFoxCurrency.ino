@@ -25,7 +25,7 @@ void loop() {
   if(Serial.available()) {
     Serial.println("START");
     String line = "";
-    while(line.length() < 18448){
+    while(line.length() < 18448 || line.indexOf("STARTSTART") == -1 || line.indexOf("ENDEND") == -1){
        line += Serial.readString();
     }
     String line2 = line.substring(line.indexOf("STARTSTART") + 10, line.indexOf("ENDEND") - 1);
@@ -46,6 +46,6 @@ void loop() {
     delay(3000L);         // Sleep for 3 seconds
     printer.wake();       // MUST wake() before printing again, even if reset
     printer.setDefault(); // Restore printer to defaults
-    Serial.println("END");
+    //}
   }
 }
