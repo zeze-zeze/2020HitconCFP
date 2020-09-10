@@ -27,7 +27,6 @@ while True:
         else:
             continue
         print(int(data), data)
-        
         data = data.decode() 
         id_ = str(random.randint(1000, 99999))
         s = hashlib.sha1()
@@ -46,16 +45,18 @@ while True:
         if not sended[-1]:
             sended.pop()
         sended = bytes([int(s[2:], 16) for s in sended])
-        sended = b'%s%s%s%s%s' % (b'STARTSTART', sended, b'ENDEND')
-        #sended = b'%s%s%s%s%s' % (b'STARTSTART', sended, b'ENDEND', data.encode(), b'MONEY')
+        sended = b'%s%s%s' % (b'STARTSTART', sended, b'ENDEND00')
+        #sended = b'%s%s%s%s%s' % (b'STARTSTART', sended, b'ENDEND', data.encode().rjust(6, b'0'), b'MONEYMONEY')
         
         #if ser.in_waiting == 0:
         #    for i in range(0, len(sended), 32):
         #        ser.write(sended[i: i + 32])
         #        time.sleep(0.001)
-        print(sended, len(sended))
-
+        print(id_, data, hash_, len(sended))
         ser.write(sended)
+        print('write finish')
+        time.sleep(60)
+        print('sleep finish')
     except KeyboardInterrupt:
         print('bye')
         break
