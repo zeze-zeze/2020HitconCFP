@@ -7,7 +7,7 @@ import hashlib
 import subprocess
 import time
 
-IP = '127.0.0.1'
+IP = '0.0.0.0'
 PORT = 20080
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server_address = (IP, PORT)
@@ -55,7 +55,7 @@ while True:
         print(id_, data, hash_, len(sended))
         ser.write(sended)
         print('write finish')
-        time.sleep(60)
+        time.sleep(40)
         print('sleep finish')
     except KeyboardInterrupt:
         print('bye')
