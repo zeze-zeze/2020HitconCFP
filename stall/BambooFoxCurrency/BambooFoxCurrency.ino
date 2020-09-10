@@ -25,7 +25,7 @@ void loop() {
   if(Serial.available()) {
     Serial.println("START");
     String line = "";
-    while(line.length() < 18448 || line.indexOf("STARTSTART") == -1 || line.indexOf("ENDEND") == -1){
+    while(line.length() < 18448){
        line += Serial.readString();
     }
     String line2 = line.substring(line.indexOf("STARTSTART") + 10, line.indexOf("ENDEND") - 1);
