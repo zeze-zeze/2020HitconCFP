@@ -23,28 +23,29 @@ void loop() {
   delay(1000);
 
   if(Serial.available()) {
+    Serial.println("START");
     String line = "";
-    while(line.length() < 18432){
+    while(line.length() < 18448 || line.indexOf("STARTSTART") == -1 || line.indexOf("ENDEND") == -1){
        line += Serial.readString();
     }
+    String line2 = line.substring(line.indexOf("STARTSTART") + 10, line.indexOf("ENDEND") - 1);
     //String line = Serial.readString();
-    uint8_t PROGMEM testqr = atoi(line.c_str()); 
-    //if(line.toInt()){
-      printer.setSize('M');        // Set type size, accepts 'S', 'M', 'L'
-      printer.justify('C');
-      printer.println(F("BambooFox Currency"));
-      //printer.printBitmap(logo_width, logo_height, fox);
-      //printer.printBitmap(foxqrcode_width, foxqrcode_height, foxqrcode);
-      printer.printBitmap(384, 384, &testqr);
-      printer.print(F("$"));
-      printer.println(line.length());
-      printer.println(F(""));
-      
-      printer.feed(2);
-      printer.sleep();      // Tell printer to sleep
-      delay(3000L);         // Sleep for 3 seconds
-      printer.wake();       // MUST wake() before printing again, even if reset
-      printer.setDefault(); // Restore printer to defaults
-    //}
+    uint8_t PROGMEM testqr = atoi(line2.c_str()); 
+    printer.setSize('M');        // Set type size, accepts 'S', 'M', 'L'
+    printer.justify('C');
+    printer.println(F("BambooFox Currency"));
+    //printer.printBitmap(logo_width, logo_height, fox);
+    //printer.printBitmap(foxqrcode_width, foxqrcode_height, foxqrcode);
+    printer.printBitmap(384, 384, &testqr);
+    printer.print(F("$"));
+    printer.println(line2.length());
+    printer.println(F(""));
+    
+    printer.feed(2);
+    printer.sleep();      // Tell printer to sleep
+    delay(3000L);         // Sleep for 3 seconds
+    printer.wake();       // MUST wake() before printing again, even if reset
+    printer.setDefault(); // Restore printer to defaults
+    Serial.println("END");
   }
 }

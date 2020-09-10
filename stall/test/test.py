@@ -46,13 +46,13 @@ while True:
         if not sended[-1]:
             sended.pop()
         sended = bytes([int(s[2:], 16) for s in sended])
-        #sended = b'%s%s' % (sended, b'END')
-        print(sended, len(sended))
+        sended = b'%s%s%s' % (b'STARTSTART', sended, b'ENDEND')
         
         #if ser.in_waiting == 0:
         #    for i in range(0, len(sended), 32):
         #        ser.write(sended[i: i + 32])
         #        time.sleep(0.001)
+        print(sended, len(sended))
 
         ser.write(sended)
     except KeyboardInterrupt:
