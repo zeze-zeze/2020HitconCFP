@@ -15,7 +15,7 @@ sock.bind(server_address)
 sock.listen(1)
 
 COM_PORT = 'COM6'
-BAUD_RATES = '115200'
+BAUD_RATES = '9600'
 ser = serial.Serial(COM_PORT, BAUD_RATES)
 while True:
     try:
@@ -46,14 +46,15 @@ while True:
         if not sended[-1]:
             sended.pop()
         sended = bytes([int(s[2:], 16) for s in sended])
+        #sended = b'%s%s' % (sended, b'END')
         print(sended, len(sended))
         
-        if ser.in_waiting == 0:
-            for i in range(0, len(sended), 32):
-                ser.write(sended[i: i + 32])
-                time.sleep(0.001)
+        #if ser.in_waiting == 0:
+        #    for i in range(0, len(sended), 32):
+        #        ser.write(sended[i: i + 32])
+        #        time.sleep(0.001)
 
-        #ser.write(sended)
+        ser.write(sended)
     except KeyboardInterrupt:
         print('bye')
         break

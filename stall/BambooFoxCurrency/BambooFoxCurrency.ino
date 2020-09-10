@@ -11,7 +11,7 @@ SoftwareSerial mySerial(RX_PIN, TX_PIN);
 Adafruit_Thermal printer(&mySerial);
 
 void setup() {
-  Serial.begin(115200);
+  Serial.begin(9600);
   // set up printer
   pinMode(7, OUTPUT); digitalWrite(7, LOW);
 
@@ -23,11 +23,11 @@ void loop() {
   delay(1000);
 
   if(Serial.available()) {
-    //String line = "";
-    //while(line.length() != 18432){
-    //   line += Serial.readString();
-    //}
-    String line = Serial.readString();
+    String line = "";
+    while(line.length() < 18432){
+       line += Serial.readString();
+    }
+    //String line = Serial.readString();
     uint8_t PROGMEM testqr = atoi(line.c_str()); 
     //if(line.toInt()){
       printer.setSize('M');        // Set type size, accepts 'S', 'M', 'L'
