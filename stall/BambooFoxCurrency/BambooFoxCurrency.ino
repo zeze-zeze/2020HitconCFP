@@ -1,5 +1,6 @@
 #include "Adafruit_Thermal.h"
 #include "foxqrcode.h"
+#include "testqr.h"
 #include "logo.h"
 #include <SoftwareSerial.h>
 
@@ -22,16 +23,21 @@ void loop() {
   delay(1000);
 
   if(Serial.available()) {
+    //String line = "";
+    //while(line.length() != 18432){
+    //   line += Serial.readString();
+    //}
     String line = Serial.readString();
-    if(line.toInt()){
+    uint8_t PROGMEM testqr = atoi(line.c_str()); 
+    //if(line.toInt()){
       printer.setSize('M');        // Set type size, accepts 'S', 'M', 'L'
       printer.justify('C');
       printer.println(F("BambooFox Currency"));
       //printer.printBitmap(logo_width, logo_height, fox);
       //printer.printBitmap(foxqrcode_width, foxqrcode_height, foxqrcode);
-      printer.printBitmap(384, 384, testqrr);
+      printer.printBitmap(384, 384, &testqr);
       printer.print(F("$"));
-      printer.println(line.toInt());
+      printer.println(line.length());
       printer.println(F(""));
       
       printer.feed(2);
@@ -39,6 +45,6 @@ void loop() {
       delay(3000L);         // Sleep for 3 seconds
       printer.wake();       // MUST wake() before printing again, even if reset
       printer.setDefault(); // Restore printer to defaults
-    }
+    //}
   }
 }
